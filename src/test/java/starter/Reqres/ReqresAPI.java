@@ -3,14 +3,12 @@ package starter.Reqres;
 import io.restassured.http.ContentType;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
+import starter.Utils.Constants;
 
 import java.io.File;
 
 public class ReqresAPI {
     private String path;
-    private static final String DIR = System.getProperty("user.dir");
-    public static final String REQ_BODY_DIR = DIR + "/src/test/resources/JSON/ReqBody/";
-    public static final String JSON_SCHEMA_DIR = DIR + "/src/test/resources/JSON/JSONSchema/";
 
     @Step("Set URL path")
     public void setUrlPath(String path) {
@@ -19,7 +17,7 @@ public class ReqresAPI {
 
     @Step("Get complete URL")
     public String getCompleteUrl() {
-        return "https://reqres.in" + this.path;
+        return Constants.BASE_URL + this.path;
     }
 
     @Step("Get list users")
