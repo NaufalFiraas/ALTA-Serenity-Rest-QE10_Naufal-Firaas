@@ -8,6 +8,7 @@ import io.restassured.module.jsv.JsonSchemaValidator;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Steps;
 import starter.Reqres.ReqresAPI;
+import starter.Reqres.ReqresResponses;
 import starter.Utils.Constants;
 
 import java.io.File;
@@ -97,7 +98,7 @@ public class LoginStepDef {
 
     @And("Response body token cannot be empty")
     public void responseBodyTokenCannotBeEmpty() {
-        SerenityRest.and().body("token", notNullValue());
+        SerenityRest.and().body(ReqresResponses.TOKEN, notNullValue());
     }
 
     @And("Validate login user with valid email and password response body JSON Schema")
@@ -108,7 +109,7 @@ public class LoginStepDef {
 
     @And("Response body error should be {string}")
     public void responseBodyErrorShouldBe(String message) {
-        SerenityRest.and().body("error", equalTo(message));
+        SerenityRest.and().body(ReqresResponses.ERROR, equalTo(message));
     }
 
     @And("Validate login user with valid email and no password response body JSON Schema")
