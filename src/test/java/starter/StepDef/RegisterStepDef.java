@@ -32,7 +32,7 @@ public class RegisterStepDef {
         SerenityRest.when().post(Constants.POST_REGISTER_USER);
     }
 
-    @And("Response body id and token cannot be empty")
+    @And("Response body id and token for register cannot be empty")
     public void responseBodyIdAndTokenCannotBeEmpty() {
         SerenityRest.and().body(ReqresResponses.ID, notNullValue()).body(ReqresResponses.TOKEN, notNullValue());
     }
@@ -85,6 +85,30 @@ public class RegisterStepDef {
     @Given("Request body for register with email is eve.holt@reqres.in and empty password")
     public void requestBodyForRegisterWithEmailIsEveHoltReqresInAndEmptyPassword() {
         File json = new File(Constants.REQ_BODY_DIR + "register/ValidEmailAndEmptyPassword.json");
+        reqresAPI.postRegisterUser(json);
+    }
+
+    @Given("Request body for register with email is eve.holt and password is pistol")
+    public void requestBodyForRegisterWithEmailIsEveHoltAndPasswordIsPistol() {
+        File json = new File(Constants.REQ_BODY_DIR + "register/NotValidEmailAndValidPassword.json");
+        reqresAPI.postRegisterUser(json);
+    }
+
+    @Given("Request body for register with email is 123 and password is pistol")
+    public void requestBodyForRegisterWithEmailIsAndPasswordIsPistol() {
+        File json = new File(Constants.REQ_BODY_DIR + "register/NumberEmailAndValidPassword.json");
+        reqresAPI.postRegisterUser(json);
+    }
+
+    @Given("Request body for register with email is eve.holt@reqres.in and password is 123")
+    public void requestBodyForRegisterWithEmailIsEveHoltReqresInAndPasswordIs() {
+        File json = new File(Constants.REQ_BODY_DIR + "register/ValidEmailAndNumberPassword.json");
+        reqresAPI.postRegisterUser(json);
+    }
+
+    @Given("Empty request body for register")
+    public void emptyRequestBodyForRegister() {
+        File json = new File(Constants.REQ_BODY_DIR + "register/EmptyRequest.json");
         reqresAPI.postRegisterUser(json);
     }
 }
