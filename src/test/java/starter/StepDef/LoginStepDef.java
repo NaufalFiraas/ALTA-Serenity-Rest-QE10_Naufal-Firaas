@@ -14,7 +14,6 @@ import starter.Utils.Constants;
 import java.io.File;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class LoginStepDef {
@@ -40,7 +39,7 @@ public class LoginStepDef {
 
     @Given("Request body with empty email and password is cityslicka")
     public void setRequestBodyWithEmptyEmailAndPasswordIsCityslicka() {
-        File json = new File(Constants.REQ_BODY_DIR + "login/EmptyEmailAndValidPassword.json");
+        File json = new File(Constants.REQ_BODY_DIR + "login/EmptyEmailAndValidPassword.json.json");
         reqresAPI.postLoginUser(json);
     }
 

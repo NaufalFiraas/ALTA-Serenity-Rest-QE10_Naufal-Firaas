@@ -11,4 +11,5 @@ public class Constants {
     public static final String PUT_UPDATE_USER_URL = BASE_URL + "/api/users/{id}";
     public static final String DELETE_USER_URL = BASE_URL + "/api/users/{id}";
     public static final String POST_LOGIN_USER = BASE_URL + "/api/login";
+    public static final String POST_REGISTER_USER = BASE_URL + "/api/register";
 }
