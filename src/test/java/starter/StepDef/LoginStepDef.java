@@ -4,31 +4,32 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Steps;
 import starter.Reqres.ReqresAPI;
+import starter.Utils.Constants;
 
 import java.io.File;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.equalToIgnoringCase;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class LoginStepDef {
 
     @Steps
     ReqresAPI reqresAPI;
 
-    @Given("URL path is {string}")
-    public void urlPathIs(String path) {
-        reqresAPI.setUrlPath(path);
-    }
-
-    @When("Set request body with email is eve.holt@reqres.in and password is cityslicka")
+    @Given("Request body with email is eve.holt@reqres.in and password is cityslicka")
     public void setRequestBodyWithEmailIsEveHoltReqresInAndPasswordIsCityslicka() {
-        File json = new File(ReqresAPI.REQ_BODY_DIR + "login/ValidEmailAndPassword.json");
+        File json = new File(Constants.REQ_BODY_DIR + "login/ValidEmailAndPassword.json");
         reqresAPI.postLoginUser(json);
     }
 
-    @And("Send POST login request")
+    @When("Send POST login request")
     public void sendPOSTLoginRequest() {
-        SerenityRest.when().post(reqresAPI.getCompleteUrl());
+        SerenityRest.when().post(Constants.POST_LOGIN_USER);
     }
 
     @Then("API response should return {int} OK status code")
@@ -36,9 +37,9 @@ public class LoginStepDef {
         SerenityRest.then().statusCode(statusCode);
     }
 
-    @When("Set request body with empty email and password is cityslicka")
+    @Given("Request body with empty email and password is cityslicka")
     public void setRequestBodyWithEmptyEmailAndPasswordIsCityslicka() {
-        File json = new File(ReqresAPI.REQ_BODY_DIR + "login/EmptyEmailAndValidPassword.json");
+        File json = new File(Constants.REQ_BODY_DIR + "login/EmptyEmailAndValidPassword.json");
         reqresAPI.postLoginUser(json);
     }
 
@@ -47,50 +48,72 @@ public class LoginStepDef {
         SerenityRest.then().statusCode(statusCode);
     }
 
-    @When("Set request body with email is eve.holt@reqres.in and empty password")
+    @Given("Request body with email is eve.holt@reqres.in and empty password")
     public void setRequestBodyWithEmailIsEveHoltReqresInAndEmptyPassword() {
-        File json = new File(ReqresAPI.REQ_BODY_DIR + "login/ValidEmailAndEmptyPassword.json");
+        File json = new File(Constants.REQ_BODY_DIR + "login/ValidEmailAndEmptyPassword.json");
         reqresAPI.postLoginUser(json);
     }
 
-    @When("Set request body with no email and password is cityslicka")
+    @Given("Request body with no email and password is cityslicka")
     public void setRequestBodyWithNoEmailAndPasswordIsCityslicka() {
-        File json = new File(ReqresAPI.REQ_BODY_DIR + "login/NoEmailAndValidPassword.json");
+        File json = new File(Constants.REQ_BODY_DIR + "login/NoEmailAndValidPassword.json");
         reqresAPI.postLoginUser(json);
     }
 
-    @When("Set request body with email is eve.holt@reqres.in and no password")
+    @Given("Request body with email is eve.holt@reqres.in and no password")
     public void setRequestBodyWithEmailIsEveHoltReqresInAndNoPassword() {
-        File json = new File(ReqresAPI.REQ_BODY_DIR + "login/ValidEmailAndNoPassword.json");
+        File json = new File(Constants.REQ_BODY_DIR + "login/ValidEmailAndNoPassword.json");
         reqresAPI.postLoginUser(json);
     }
 
-    @When("Set request body with email is eve holt and password is cityslicka")
+    @Given("Request body with email is eve holt and password is cityslicka")
     public void setRequestBodyWithEmailIsEveHoltAndPasswordIsCityslicka() {
-        File json = new File(ReqresAPI.REQ_BODY_DIR + "login/UnvalidEmailAndValidPassword.json");
+        File json = new File(Constants.REQ_BODY_DIR + "login/UnvalidEmailAndValidPassword.json");
         reqresAPI.postLoginUser(json);
     }
 
-    @When("Set request body with email is 123 and password is cityslicka")
+    @Given("Request body with email is 123 and password is cityslicka")
     public void setRequestBodyWithEmailIsAndPasswordIsCityslicka() {
-        File json = new File(ReqresAPI.REQ_BODY_DIR + "login/NumberEmailAndValidPassword.json");
+        File json = new File(Constants.REQ_BODY_DIR + "login/NumberEmailAndValidPassword.json");
         reqresAPI.postLoginUser(json);
     }
 
-    @When("Set request body with email is eve.holt@reqres.in and password is 123")
+    @Given("Request body with email is eve.holt@reqres.in and password is 123")
     public void setRequestBodyWithEmailIsEveHoltReqresInAndPasswordIs() {
-        File json = new File(ReqresAPI.REQ_BODY_DIR + "login/ValidEmailAndNumberPassword.json");
+        File json = new File(Constants.REQ_BODY_DIR + "login/ValidEmailAndNumberPassword.json");
         reqresAPI.postLoginUser(json);
     }
 
-    @When("Set request body with email is naufal@gmail.com and password is cityslicka")
+    @Given("Request body with email is naufal@gmail.com and password is cityslicka")
     public void setRequestBodyWithEmailIsNaufalGmailComAndPasswordIsCityslicka() {
-        File json = new File(ReqresAPI.REQ_BODY_DIR + "login/UnregisteredUser.json");
+        File json = new File(Constants.REQ_BODY_DIR + "login/UnregisteredUser.json");
         reqresAPI.postLoginUser(json);
     }
 
     @Then("API response should return {int} Not Found status code")
     public void apiResponseShouldReturnNotFoundStatusCode(int statusCode) {
         SerenityRest.then().statusCode(statusCode);
+    }
+
+    @And("Response body token cannot be empty")
+    public void responseBodyTokenCannotBeEmpty() {
+        SerenityRest.and().body("token", notNullValue());
+    }
+
+    @And("Validate login user with valid email and password response body JSON Schema")
+    public void validateLoginUserWithValidEmailAndPasswordResponseBodyJSONSchema() {
+        File json = new File(Constants.JSON_SCHEMA_DIR + "login/ValidEmailAndPassword.json");
+        SerenityRest.and().assertThat().body(JsonSchemaValidator.matchesJsonSchema(json));
+    }
+
+    @And("Response body error should be {string}")
+    public void responseBodyErrorShouldBe(String message) {
+        SerenityRest.and().body("error", equalTo(message));
+    }
+
+    @And("Validate login user with valid email and no password response body JSON Schema")
+    public void validateLoginUserWithValidEmailAndNoPasswordResponseBodyJSONSchema() {
+        File json = new File(Constants.JSON_SCHEMA_DIR + "login/ErrorSchema.json");
+        SerenityRest.and().assertThat().body(JsonSchemaValidator.matchesJsonSchema(json));
     }
 }
