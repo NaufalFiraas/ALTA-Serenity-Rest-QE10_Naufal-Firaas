@@ -116,4 +116,10 @@ public class LoginStepDef {
         File json = new File(Constants.JSON_SCHEMA_DIR + "login/ErrorSchema.json");
         SerenityRest.and().assertThat().body(JsonSchemaValidator.matchesJsonSchema(json));
     }
+
+    @Given("Empty request body")
+    public void emptyRequestBody() {
+        File json = new File(Constants.REQ_BODY_DIR + "login/EmptyRequest.json");
+        reqresAPI.postLoginUser(json);
+    }
 }

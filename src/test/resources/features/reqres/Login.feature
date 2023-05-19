@@ -57,3 +57,9 @@ Feature: POST Login User
     Given Request body with email is naufal@gmail.com and password is cityslicka
     When Send POST login request
     Then API response should return 404 Not Found status code
+
+  @Tugas
+  Scenario: Login with empty request body
+    Given Empty request body
+    When Send POST login request
+    Then API response should return 400 Bad Request status code
