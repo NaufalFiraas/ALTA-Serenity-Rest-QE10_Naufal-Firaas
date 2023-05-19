@@ -20,15 +20,14 @@ public class ReqresStepDef {
     ReqresAPI reqresAPI;
 
     //    GET LIST USERS
-    @Given("Get list users with valid parameter page {int} and path {string}")
+    @Given("Get list users with valid parameter page {int}")
     public void getListUsersWithValidParameterPage(int page, String path) {
         reqresAPI.getListUserValidParamPage(page);
-        reqresAPI.setUrlPath(path);
     }
 
     @When("Send get lists users")
     public void sendGetListsUsers() {
-        SerenityRest.when().get(reqresAPI.getCompleteUrl());
+        SerenityRest.when().get(Constants.GET_LIST_USER_URL);
     }
 
     @Then("Status code should be {int} OK")
@@ -48,16 +47,15 @@ public class ReqresStepDef {
     }
 
     //    POST CREATE NEW USER
-    @Given("Post create user with valid json and path {string}")
+    @Given("Post create user with valid json")
     public void postCreateUserWithValidJson(String path) {
-        reqresAPI.setUrlPath(path);
         File json = new File(Constants.REQ_BODY_DIR + "UserReqBody.json");
         reqresAPI.postCreateUser(json);
     }
 
     @When("Send post create user")
     public void sendPostCreateUser() {
-        SerenityRest.when().post(reqresAPI.getCompleteUrl());
+        SerenityRest.when().post(Constants.POST_CREATE_USER_URL);
     }
 
     @Then("Status code should {int} Created")
@@ -77,16 +75,15 @@ public class ReqresStepDef {
     }
 
     //    PUT UPDATE USER
-    @Given("Put update user with valid json and id {int} and path {string}")
+    @Given("Put update user with valid json and id {int}")
     public void putUpdateUserWithValidJsonAndId(int id, String path) {
-        reqresAPI.setUrlPath(path);
         File json = new File(Constants.REQ_BODY_DIR + "UserReqBody.json");
         reqresAPI.putUpdateUser(id, json);
     }
 
     @When("Send put update user")
     public void sendPutUpdateUser() {
-        SerenityRest.when().put(reqresAPI.getCompleteUrl());
+        SerenityRest.when().put(Constants.PUT_UPDATE_USER_URL);
     }
 
     @And("Response body for put name was {string} and job was {string}")
@@ -101,15 +98,14 @@ public class ReqresStepDef {
     }
 
     //    DELETE USER
-    @Given("Delete user with id {int} and path {string}")
+    @Given("Delete user with id {int}")
     public void deleteUserWithId(int id, String path) {
-        reqresAPI.setUrlPath(path);
         reqresAPI.deleteUser(id);
     }
 
     @When("Send delete user")
     public void sendDeleteUser() {
-        SerenityRest.when().delete(reqresAPI.getCompleteUrl());
+        SerenityRest.when().delete(Constants.DELETE_USER_URL);
     }
 
     @Then("Status code should be {int} No Content")

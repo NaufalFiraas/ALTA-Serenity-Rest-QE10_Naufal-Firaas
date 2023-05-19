@@ -8,17 +8,6 @@ import starter.Utils.Constants;
 import java.io.File;
 
 public class ReqresAPI {
-    private String path;
-
-    @Step("Set URL path")
-    public void setUrlPath(String path) {
-        this.path = path;
-    }
-
-    @Step("Get complete URL")
-    public String getCompleteUrl() {
-        return Constants.BASE_URL + this.path;
-    }
 
     @Step("Get list users")
     public void getListUserValidParamPage(Object page) {
