@@ -10,7 +10,7 @@ import java.io.File;
 public class ReqresAPI {
 
     @Step("Get list users")
-    public void getListUserValidParamPage(Object page) {
+    public void getListUser(Object page) {
         SerenityRest.given().pathParam("page", page);
     }
 
@@ -35,6 +35,11 @@ public class ReqresAPI {
 
     @Step("Post login user")
     public void postLoginUser(File json) {
+        SerenityRest.given().contentType(ContentType.JSON).body(json);
+    }
+
+    @Step("Post register user")
+    public void postRegisterUser(File json) {
         SerenityRest.given().contentType(ContentType.JSON).body(json);
     }
 }
