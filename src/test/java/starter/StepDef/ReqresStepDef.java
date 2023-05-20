@@ -17,7 +17,7 @@ public class ReqresStepDef {
     //    GET LIST USERS
     @Given("Get list users with valid parameter page {int}")
     public void getListUsersWithValidParameterPage(int page, String path) {
-        reqresAPI.getListUserValidParamPage(page);
+        reqresAPI.getListUser(page);
     }
 
     @When("Send get lists users")

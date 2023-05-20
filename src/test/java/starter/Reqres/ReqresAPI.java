@@ -9,7 +9,7 @@ import java.io.File;
 public class ReqresAPI {
 
     @Step("Get list users")
-    public void getListUserValidParamPage(Object page) {
+    public void getListUser(Object page) {
         SerenityRest.given().pathParam("page", page);
     }
 
