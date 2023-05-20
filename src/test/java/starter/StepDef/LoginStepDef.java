@@ -39,7 +39,7 @@ public class LoginStepDef {
 
     @Given("Request body with empty email and password is cityslicka")
     public void setRequestBodyWithEmptyEmailAndPasswordIsCityslicka() {
-        File json = new File(Constants.REQ_BODY_DIR + "login/EmptyEmailAndValidPassword.json.json");
+        File json = new File(Constants.REQ_BODY_DIR + "login/EmptyEmailAndValidPassword.json");
         reqresAPI.postLoginUser(json);
     }
 
